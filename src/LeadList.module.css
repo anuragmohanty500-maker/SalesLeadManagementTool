@@ -1,0 +1,29 @@
+.leadItem {
+  display: block;
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #e9f1f7;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.leadItem:hover {
+  background-color: #d0e6fc;
+}
+
+.leadItem:focus-visible {
+  outline: 3px solid #111;
+  outline-offset: 2px;
+}
+
+.selected {
+  font-weight: 700;
+  background-color: #21618c;
+  color: #fff;
+}

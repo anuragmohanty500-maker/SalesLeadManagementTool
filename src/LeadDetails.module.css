@@ -1,0 +1,21 @@
+.leadDetails {
+  padding: 16px 20px;
+  border: 1px solid #b7d8ce;
+  border-radius: 8px;
+  background-color: #f0f7f4;
+  color: #243c38;
+}
+
+.heading {
+  margin: 0 0 16px;
+  color: #246b5a;
+}
+
+.field {
+  margin: 10px 0;
+  color: #3b514b;
+}
+
+.field strong {
+  color: #1c5f50;
+}
