@@ -13,6 +13,23 @@ The application follows a lightweight frontend architecture built around a clear
 
 This structure keeps the app easy to understand, maintain, and extend without tightly coupling components to each other.
 
+### Architecture and data flow
+
+```mermaid
+flowchart LR
+	User[Salesperson] --> UI[React UI]
+	UI --> List[LeadList]
+	UI --> Details[LeadDetails]
+	UI --> Activity[ActivityLog]
+	List --> Store[Redux Toolkit store]
+	Details --> Store
+	Activity --> Store
+	Store --> Storage[(Browser localStorage)]
+	Storage --> Store
+```
+
+The salesperson selects a lead in `LeadList`. The selection is stored in Redux, and `LeadDetails` and `ActivityLog` display data for that lead. Submitting an activity dispatches an action that updates the lead in the store; the store subscription persists lead data to localStorage. The initial lead data is static, so no remote backend is used in this frontend implementation.
+
 ## 3. Data Model
 The application state is built around a small but flexible CRM-style model.
 
@@ -84,7 +101,19 @@ The app was also verified by running the project checks successfully:
 - npm test -- --watchAll=false
 - npm run build
 
-These checks confirm the implementation is functionally correct and production-ready.
+These checks provide automated validation of the main workflow and confirm that a production bundle can be generated. They do not replace production monitoring.
 
-## 8. Conclusion
+## 8. Observability Strategy
+
+This is a frontend prototype with static lead data and no remote backend. Current checks are the reducer and UI workflow tests, manual checks of lead selection and activity logging, and the production build. The app does not currently send telemetry to a monitoring service.
+
+For a production version, I would add client-side error reporting for unexpected UI errors and failures to read or write local data. I would track basic, privacy-conscious events such as activity submission success or failure, without recording lead names, emails, phone numbers, or activity text. If a backend is introduced, request logs, latency metrics, and tracing would help diagnose service issues.
+
+## 9. GenAI Use in the Design Phase
+
+I used GenAI to help break the scenario into user flows, identify the lead and activity data needed, and compare a lightweight frontend design with a mocked backend against the assessment requirements. I chose a component-based React UI with Redux Toolkit because lead selection and activity updates are shared across the list, details, and activity views. I treated localStorage as the prototype's persistence mechanism and documented that the backend is mocked rather than a production service.
+
+I reviewed the proposed design against the scenario requirements and refined it around the required workflow: view leads, select a lead, inspect details and activity history, and add a follow-up activity. I then checked the implementation with automated tests and a production build.
+
+## 10. Conclusion
 The Sales Lead Management Tool demonstrates a practical CRM-style interface built with modern frontend tooling. The design is intentionally simple and maintainable while still showing strong engineering practices such as typed state, centralized logic, modular components, and automated validation.
